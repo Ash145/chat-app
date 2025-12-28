@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken"
+import { ENV } from "./env.js";
 
 export const generateToken = (userId, res) => {
 
-    const { SECRET_KEY } = process.env
+    const { SECRET_KEY } = ENV
     if (!SECRET_KEY) {
         throw new Error("JWT SECRECT KEY is not configured");
     }
@@ -15,7 +16,7 @@ export const generateToken = (userId, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "strict",
-        secure: process.env.NODE_ENV === "production" ? true : false
+        secure: ENV.NODE_ENV === "production" ? true : false
     });
     return token;
 };
